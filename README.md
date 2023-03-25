@@ -17,4 +17,4 @@ https://github.com/rortizs/MiWebApp.git
 
 This project is used by the following companies:
 
-- ING. RICHARD ORTIZ - UMG
+- Ingeniero Richard Ortiz | UMG Guastatoya
