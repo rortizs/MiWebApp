@@ -59,6 +59,7 @@ configurar el usuario para Ubuntu
 -comando para modificar el directorio que me permite crear mis virtual host
     --> sudo nano /etc/apache2/sites-available/SuNombreProyecto.conf    
     ** A este directorio en blanco le colocamos la siguiente instruccion
+## configuracion virtual host
         <VirtualHost *:80>
             ServerName SuNombreProyecto
             ServerAlias www.SuNombreProyecto 
@@ -68,6 +69,7 @@ configurar el usuario para Ubuntu
             CustomLog ${APACHE_LOG_DIR}/access.log combined
         </VirtualHost>
     --comando -> CTRL + X, luego Y --> ENTER
+## comanddo para configurar directorio de apache
 
 -comando para primero deshabilitar el directorio default 
     -> sudo a2dissite 000-default
