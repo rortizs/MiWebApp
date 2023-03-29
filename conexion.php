@@ -1,6 +1,6 @@
 <?php
 
-$servidor = "localhost"; //127.0.0.1
+$servidor = "localhost"; //127.0.0.1   evoairoment
 $baseDatos = "app"; //nombre de la base de datos
 $usuario = "root"; //usuario
 $clave = ""; //password
