@@ -47,6 +47,9 @@ configurar el usuario para Ubuntu
 ### Una vez instalado Mysql se debe correr un script presintalado anteriormente
 --comando --> mysql_secure_installation
 
+--comando para ingresar a mysql desde la terminal 
+--comando --> sudo mysql -u root -p
+
 ## sexto paso para instalar PHP
 -comando --> sudo apt install php libapache2-mod-php php-mysql
 -comando para validar que version de php tenermos --> php -v (8.x)
