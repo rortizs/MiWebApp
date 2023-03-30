@@ -1,64 +1,64 @@
 <?php
 
 //CONEXION
-include "../../bd.php";
+include("../../conexion.php");
 
 //para insertar informacion
 
 if ($_POST) {
 
-	print_r($_POST);
-	print_r($_FILES);
+  print_r($_POST);
+  print_r($_FILES);
 
-	//SE TOMAN LOS DATOS DEL METODO POST
-	$primerNombre = (isset($_POST["primerNombre"]) ? $_POST["primerNombre"] : "");
-	$segundoNombre = (isset($_POST["segundoNombre"]) ? $_POST["segundoNombre"] : "");
-	$primerApellido = (isset($_POST["primerApellido"]) ? $_POST["primerApellido"] : "");
-	$segundoApellido = (isset($_POST["segundoApellido"]) ? $_POST["segundoApellido"] : "");
+  //SE TOMAN LOS DATOS DEL METODO POST
+  $primerNombre = (isset($_POST["primerNombre"]) ? $_POST["primerNombre"] : "");
+  $segundoNombre = (isset($_POST["segundoNombre"]) ? $_POST["segundoNombre"] : "");
+  $primerApellido = (isset($_POST["primerApellido"]) ? $_POST["primerApellido"] : "");
+  $segundoApellido = (isset($_POST["segundoApellido"]) ? $_POST["segundoApellido"] : "");
 
-	$idPuesto = (isset($_POST["idpuesto"]) ? $_POST["idpuesto"] : "");
-	$fehcaIngreso = (isset($_POST["fehcaIngreso"]) ? $_POST["fehcaIngreso"] : "");
+  $idPuesto = (isset($_POST["idpuesto"]) ? $_POST["idpuesto"] : "");
+  $fehcaIngreso = (isset($_POST["fehcaIngreso"]) ? $_POST["fehcaIngreso"] : "");
 
-	$foto = (isset($_FILES["foto"]['name']) ? $_FILES["foto"]['name'] : "");
-	$cv = (isset($_FILES["cv"]['name']) ? $_FILES["cv"]['name'] : "");
+  $foto = (isset($_FILES["foto"]['name']) ? $_FILES["foto"]['name'] : "");
+  $cv = (isset($_FILES["cv"]['name']) ? $_FILES["cv"]['name'] : "");
 
-	//SENTECIA SQL
-	$sentencia = $conexion->prepare("INSERT INTO
+  //SENTECIA SQL
+  $sentencia = $conexion->prepare("INSERT INTO
             `tbl_empleados` (`id_empleado`, `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `foto`, `cv`, `id_puesto`, `fecha_ingreso`)
             VALUES (NULL,:primer_nombre,:segundo_nombre,:primer_apellido,:segundo_apellido,:foto,:cv,:idPuesto,:fecha_ingreso);");
 
-	//asignando los valores del metodo post, del formulario
-	$sentencia->bindParam(":primer_nombre", $primerNombre);
-	$sentencia->bindParam(":segundo_nombre", $segundoNombre);
-	$sentencia->bindParam(":primer_apellido", $primerApellido);
-	$sentencia->bindParam(":segundo_apellido", $segundoApellido);
+  //asignando los valores del metodo post, del formulario
+  $sentencia->bindParam(":primer_nombre", $primerNombre);
+  $sentencia->bindParam(":segundo_nombre", $segundoNombre);
+  $sentencia->bindParam(":primer_apellido", $primerApellido);
+  $sentencia->bindParam(":segundo_apellido", $segundoApellido);
 
-	//se adjunta la foto
-	$fecha_foto = new DateTime();
-	$nombreArchivo_foto = ($foto != '') ? $fecha_foto->getTimestamp() . "_" . $_FILES['foto']['name'] : "";
-	$tmp_foto = $_FILES['foto']['tmp_name'];
+  //se adjunta la foto
+  $fecha_foto = new DateTime();
+  $nombreArchivo_foto = ($foto != '') ? $fecha_foto->getTimestamp() . "_" . $_FILES['foto']['name'] : "";
+  $tmp_foto = $_FILES['foto']['tmp_name'];
 
-	//validamos si todo esta bien
-	if ($tmp_foto != '') {
-		move_uploaded_file($tmp_foto, "./" . $nombreArchivo_foto);
-	}
-	$sentencia->bindParam(":foto", $nombreArchivo_foto);
+  //validamos si todo esta bien
+  if ($tmp_foto != '') {
+    move_uploaded_file($tmp_foto, "./" . $nombreArchivo_foto);
+  }
+  $sentencia->bindParam(":foto", $nombreArchivo_foto);
 
-	//se adjunta el cv
-	$nombreArchivo_cv = ($cv != '') ? $fecha_foto->getTimestamp() . "_" . $_FILES['cv']['name'] : "";
-	$tmp_cv = $_FILES['cv']['tmp_name'];
+  //se adjunta el cv
+  $nombreArchivo_cv = ($cv != '') ? $fecha_foto->getTimestamp() . "_" . $_FILES['cv']['name'] : "";
+  $tmp_cv = $_FILES['cv']['tmp_name'];
 
-	//validamos si todo esta bien
-	if ($tmp_cv != '') {
-		move_uploaded_file($tmp_cv, "./" . $nombreArchivo_cv);
-	}
-	$sentencia->bindParam(":cv", $nombreArchivo_cv);
+  //validamos si todo esta bien
+  if ($tmp_cv != '') {
+    move_uploaded_file($tmp_cv, "./" . $nombreArchivo_cv);
+  }
+  $sentencia->bindParam(":cv", $nombreArchivo_cv);
 
-	$sentencia->bindParam(":idPuesto", $idPuesto);
-	$sentencia->bindParam(":fecha_ingreso", $fehcaIngreso);
+  $sentencia->bindParam(":idPuesto", $idPuesto);
+  $sentencia->bindParam(":fecha_ingreso", $fehcaIngreso);
 
-	$sentencia->execute();
-	header("Location: index.php");
+  $sentencia->execute();
+  header("Location: index.php");
 }
 
 //CONSULTA SQL A LA TABLA PUESTOS
@@ -70,7 +70,7 @@ $lista_table_puesto = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
-<?php include "../../templates/header.php";?>
+<?php include "../../template/header.php"; ?>
 
 </br>
 <div class="card">
@@ -114,9 +114,9 @@ $lista_table_puesto = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         <label for="idpuesto" class="form-label">Puesto:</label>
         <select class="form-select form-select-sm" name="idpuesto" id="idpuesto">
           <!-- Ciclo for each para la tabla puestos -->
-          <?php foreach ($lista_table_puesto as $registro) {?>
+          <?php foreach ($lista_table_puesto as $registro) { ?>
             <option value="<?php echo $registro['id_puestos'] ?>"><?php echo $registro['nombre_puesto'] ?></option>
-          <?php }?>
+          <?php } ?>
         </select>
 
       </div>
@@ -137,4 +137,4 @@ $lista_table_puesto = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-<?php include "../../templates/footer.php";?>
+<?php include "../../template/footer.php"; ?>

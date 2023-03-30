@@ -2,34 +2,33 @@
 <?php
 
 //CONEXION
-include "../../bd.php";
+include("../../conexion.php");
 
 //para insertar informacion
 
 if ($_POST) {
 
-	print_r($_POST);
+    print_r($_POST);
 
-	//SE TOMAN LOS DATOS DEL METODO POST
-	$nombre_puesto = (isset($_POST["nombrePuesto"]) ? $_POST["nombrePuesto"] : "");
+    //SE TOMAN LOS DATOS DEL METODO POST
+    $nombre_puesto = (isset($_POST["nombrePuesto"]) ? $_POST["nombrePuesto"] : "");
 
-	//SENTECIA SQL
-	$sentencia = $conexion->prepare("INSERT INTO tbl_puestos(id_puestos,nombre_puesto)
+    //SENTECIA SQL
+    $sentencia = $conexion->prepare("INSERT INTO tbl_puestos(id_puestos,nombre_puesto)
                                  VALUES (null, :nombrePuesto)");
-	print_r($sentencia);
+    print_r($sentencia);
 
-	//asignando los valores del metodo post, del formulario
-	$sentencia->bindParam(":nombrePuesto", $nombre_puesto);
-	$sentencia->execute();
-	header("Location: index.php");
-
+    //asignando los valores del metodo post, del formulario
+    $sentencia->bindParam(":nombrePuesto", $nombre_puesto);
+    $sentencia->execute();
+    header("Location: index.php");
 }
 
 //imprimo la lista
 //print_r($lista_table_puesto);
 
 ?>
-<?php include "../../templates/header.php";?>
+<?php include("../../template/header.php"); ?>
 
 </br>
 <div class="card">
@@ -39,9 +38,8 @@ if ($_POST) {
     <div class="card-body">
         <form action="" method="post" enctype="multipart/form-data">
             <div class="mb-3">
-              <label for="nombrePuesto" class="form-label">Nombre del puesto:</label>
-              <input type="text"
-                class="form-control" name="nombrePuesto" id="nombrePuesto" aria-describedby="helpId" placeholder="Nombre del puesto">
+                <label for="nombrePuesto" class="form-label">Nombre del puesto:</label>
+                <input type="text" class="form-control" name="nombrePuesto" id="nombrePuesto" aria-describedby="helpId" placeholder="Nombre del puesto">
             </div>
 
             <button type="submit" class="btn btn-success">Agregar</button>
@@ -57,4 +55,4 @@ if ($_POST) {
 
 
 
-<?php include "../../templates/footer.php";?>
+<?php include("../../template/footer.php"); ?>

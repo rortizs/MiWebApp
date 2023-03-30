@@ -1,46 +1,46 @@
 <?php
 
 //CONEXION
-include "../../bd.php";
+include ("../../conexion.php");
 
 //validamos, y enviamos parametros por el metodo get, para borrar
 if (isset($_GET['txtID'])) {
 
-	//if ternario
-	$txtID = (isset($_GET['txtID']) ? $_GET['txtID'] : "");
+    //if ternario
+    $txtID = (isset($_GET['txtID']) ? $_GET['txtID'] : "");
 
-	//todo: Primero
-	/* Getting the foto and cv from the tbl_empleados table where the id_empleado is equal to the id. */
-	$sentencia = $conexion->prepare("SELECT foto, cv FROM `tbl_empleados` WHERE `id_empleado` = :id");
-	$sentencia->bindParam(':id', $txtID);
-	$sentencia->execute();
-	$registro_recuperado = $sentencia->fetch(PDO::FETCH_LAZY);
+    //todo: Primero
+    /* Getting the foto and cv from the tbl_empleados table where the id_empleado is equal to the id. */
+    $sentencia = $conexion->prepare("SELECT foto, cv FROM `tbl_empleados` WHERE `id_empleado` = :id");
+    $sentencia->bindParam(':id', $txtID);
+    $sentencia->execute();
+    $registro_recuperado = $sentencia->fetch(PDO::FETCH_LAZY);
 
-	//print_r($registro_recuperad);
+    //print_r($registro_recuperad);
 
-	//todo: Segundo
-	/* Checking if the file exists and if it does, it deletes it. */
-	if (isset($registro_recuperado["foto"]) && $registro_recuperado["foto"] != "") {
-		if (file_exists("./") . $registro_recuperado["foto"]) {
-			unlink("./" . $registro_recuperado["foto"]);
-		}
-	}
+    //todo: Segundo
+    /* Checking if the file exists and if it does, it deletes it. */
+    if (isset($registro_recuperado["foto"]) && $registro_recuperado["foto"] != "") {
+        if (file_exists("./") . $registro_recuperado["foto"]) {
+            unlink("./" . $registro_recuperado["foto"]);
+        }
+    }
 
-	/* Checking if the file exists and if it does, it deletes it. */
-	if (isset($registro_recuperado["cv"]) && $registro_recuperado["cv"] != "") {
-		if (file_exists("./") . $registro_recuperado["cv"]) {
-			unlink("./" . $registro_recuperado["cv"]);
-		}
-	}
+    /* Checking if the file exists and if it does, it deletes it. */
+    if (isset($registro_recuperado["cv"]) && $registro_recuperado["cv"] != "") {
+        if (file_exists("./") . $registro_recuperado["cv"]) {
+            unlink("./" . $registro_recuperado["cv"]);
+        }
+    }
 
-	//todo: Tercero
-	//$id=$_GET['txtID'];
+    //todo: Tercero
+    //$id=$_GET['txtID'];
 
-	/* Deleting the record from the database. */
-	$sentencia = $conexion->prepare("DELETE FROM `tbl_empleados` WHERE `id_empleado` = :id");
-	$sentencia->bindParam(':id', $txtID);
-	$sentencia->execute();
-	header("Location: index.php");
+    /* Deleting the record from the database. */
+    $sentencia = $conexion->prepare("DELETE FROM `tbl_empleados` WHERE `id_empleado` = :id");
+    $sentencia->bindParam(':id', $txtID);
+    $sentencia->execute();
+    header("Location: index.php");
 }
 
 // Consulta para obtener los datos de la tabla empleados y el puesto
@@ -56,7 +56,7 @@ $lista_table_empleados = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
-<?php include "../../templates/header.php";?>
+<?php include "../../template/header.php"; ?>
 </br>
 <h4> Empleados </h4>
 <div class="card">
@@ -81,7 +81,7 @@ $lista_table_empleados = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                 </thead>
                 <tbody>
                     <!-- Ciclo for each -->
-                    <?php foreach ($lista_table_empleados as $registro) {?>
+                    <?php foreach ($lista_table_empleados as $registro) { ?>
                         <tr class="">
                             <td scope="row"><?php echo $registro['id_empleado'] ?></td>
                             <td scope="row">
@@ -103,7 +103,7 @@ $lista_table_empleados = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                 <a class="btn btn-danger" href="index.php?txtID=<?php echo $registro['id_empleado']; ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar al empleado?')" role="button">Eliminar</a>
                             </td>
                         </tr>
-                    <?php }?>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
@@ -116,4 +116,4 @@ $lista_table_empleados = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-<?php include "../../templates/footer.php";?>
+<?php include "../../template/footer.php"; ?>

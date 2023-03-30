@@ -1,31 +1,31 @@
 <?php
 //CONEXION
-include "../../bd.php";
+include ("../../conexion.php");
 
 if (isset($_GET['txtID'])) {
-	$txtID = (isset($_GET['txtID']) ? $_GET['txtID'] : "");
+    $txtID = (isset($_GET['txtID']) ? $_GET['txtID'] : "");
 
-	$sentencia = $conexion->prepare("SELECT * FROM tbl_empleados WHERE id_empleado=:id");
-	$sentencia->bindParam(':id', $txtID);
-	$sentencia->execute();
+    $sentencia = $conexion->prepare("SELECT * FROM tbl_empleados WHERE id_empleado=:id");
+    $sentencia->bindParam(':id', $txtID);
+    $sentencia->execute();
 
-	$registro = $sentencia->fetch(PDO::FETCH_LAZY);
+    $registro = $sentencia->fetch(PDO::FETCH_LAZY);
 
-	$primerNombre = $registro['primer_nombre'];
-	$segundoNombre = $registro['segundo_nombre'];
-	$primerApellido = $registro['primer_apellido'];
-	$segundoApellido = $registro['segundo_apellido'];
-	$foto = $registro['foto'];
-	$cv = $registro['cv'];
-	$idPuesto = $registro['idPuesto'];
-	$fehcaIngreso = $registro['fecha_ingreso'];
+    $primerNombre = $registro['primer_nombre'];
+    $segundoNombre = $registro['segundo_nombre'];
+    $primerApellido = $registro['primer_apellido'];
+    $segundoApellido = $registro['segundo_apellido'];
+    $foto = $registro['foto'];
+    $cv = $registro['cv'];
+    $idPuesto = $registro['idPuesto'];
+    $fehcaIngreso = $registro['fecha_ingreso'];
 
-	//print_r($registro);
+    //print_r($registro);
 }
 
 ?>
 
-<?php include "../../templates/header.php";?>
+<?php include "../../template/header.php"; ?>
 
 </br>
 <div class="card">
@@ -74,9 +74,9 @@ if (isset($_GET['txtID'])) {
                 <label for="idpuesto" class="form-label">Puesto:</label>
                 <select class="form-select form-select-sm" name="idpuesto" id="idpuesto">
                     <!-- Ciclo for each para la tabla puestos -->
-                    <?php foreach ($lista_table_puesto as $registro) {?>
+                    <?php foreach ($lista_table_puesto as $registro) { ?>
                         <option value="<?php echo $registro['id_puestos'] ?>"><?php echo $registro['nombre_puesto'] ?></option>
-                    <?php }?>
+                    <?php } ?>
                 </select>
 
             </div>
@@ -97,4 +97,4 @@ if (isset($_GET['txtID'])) {
 
 
 
-<?php include "../../templates/footer.php";?>
+<?php include "../../template/footer.php"; ?>

@@ -2,20 +2,19 @@
 <?php
 
 //CONEXION
-include "../../bd.php";
+include("../../conexion.php");
 
 //validamos, y enviamos parametros por el metodo get, para borrar
 if (isset($_GET['txtID'])) {
 
-	//if ternario
-	$txtID = (isset($_GET['txtID']) ? $_GET['txtID'] : "");
+    //if ternario
+    $txtID = (isset($_GET['txtID']) ? $_GET['txtID'] : "");
 
-	//$id=$_GET['txtID'];
-	$sentencia = $conexion->prepare("DELETE FROM `tbl_puestos` WHERE `id_puestos` = :id");
-	$sentencia->bindParam(':id', $txtID);
-	$sentencia->execute();
-	header("Location: index.php");
-
+    //$id=$_GET['txtID'];
+    $sentencia = $conexion->prepare("DELETE FROM `tbl_puestos` WHERE `id_puestos` = :id");
+    $sentencia->bindParam(':id', $txtID);
+    $sentencia->execute();
+    header("Location: index.php");
 }
 
 //CONSULTA SQL A LA TABLA PUESTOS
@@ -31,7 +30,7 @@ $lista_table_puesto = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 //print_r($lista_table_puesto);
 
 ?>
-<?php include "../../templates/header.php";?>
+<?php include("../../template/header.php"); ?>
 
 
 
@@ -53,7 +52,7 @@ $lista_table_puesto = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                 </thead>
                 <tbody>
                     <!-- Ciclo for each -->
-                    <?php foreach ($lista_table_puesto as $registro) {?>
+                    <?php foreach ($lista_table_puesto as $registro) { ?>
                         <tr class="">
                             <td scope="row"><?php echo $registro['id_puestos'] ?></td>
                             <td><?php echo $registro['nombre_puesto'] ?></td>
@@ -63,7 +62,7 @@ $lista_table_puesto = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                 <a class="btn btn-danger" href="index.php?txtID=<?php echo $registro['id_puestos']; ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar este puesto?')" role="button">Eliminar</a>
                             </td>
                         </tr>
-                    <?php }?>
+                    <?php } ?>
 
                 </tbody>
             </table>
@@ -77,4 +76,4 @@ $lista_table_puesto = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-<?php include "../../templates/footer.php";?>
+<?php include("../../template/footer.php"); ?>

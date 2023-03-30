@@ -2,7 +2,7 @@
 <?php
 
 //CONEXION
-include "../../bd.php";
+include ("../../conexion.php");
 
 //validamos, y enviamos parametros por el metodo get, para borrar
 if (isset($_GET['txtID'])) {
@@ -31,7 +31,7 @@ $lista_table_usuarios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
-<?php include "../../templates/header.php";?>
+<?php include ("../../template/header.php");?>
 
 
 </br>
@@ -80,4 +80,4 @@ $lista_table_usuarios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-<?php include "../../templates/footer.php";?>
+<?php include ("../../template/footer.php");?>

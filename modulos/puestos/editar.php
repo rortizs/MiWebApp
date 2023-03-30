@@ -1,44 +1,43 @@
-
 <?php
 
 //CONEXION
-include "../../bd.php";
+include("../../conexion.php");
 
 if (isset($_GET['txtID'])) {
-	$txtID = (isset($_GET['txtID']) ? $_GET['txtID'] : "");
+    $txtID = (isset($_GET['txtID']) ? $_GET['txtID'] : "");
 
-	$sentencia = $conexion->prepare("SELECT * FROM tbl_puestos WHERE id_puestos=:id");
-	$sentencia->bindParam(':id', $txtID);
-	$sentencia->execute();
+    $sentencia = $conexion->prepare("SELECT * FROM tbl_puestos WHERE id_puestos=:id");
+    $sentencia->bindParam(':id', $txtID);
+    $sentencia->execute();
 
-	$registro = $sentencia->fetch(PDO::FETCH_LAZY);
-	$nombrePuesto = $registro['nombre_puesto'];
-	//print_r($registro);
+    $registro = $sentencia->fetch(PDO::FETCH_LAZY);
+    $nombrePuesto = $registro['nombre_puesto'];
+    //print_r($registro);
 }
 
 //para editar informacion
 
 if ($_POST) {
 
-	print_r($_POST);
+    print_r($_POST);
 
-	//SE TOMAN LOS DATOS DEL METODO POST
-	$txtID = (isset($_POST['txtID']) ? $_POST['txtID'] : "");
-	$nombre_puesto = (isset($_POST["nombrePuesto"]) ? $_POST["nombrePuesto"] : "");
+    //SE TOMAN LOS DATOS DEL METODO POST
+    $txtID = (isset($_POST['txtID']) ? $_POST['txtID'] : "");
+    $nombre_puesto = (isset($_POST["nombrePuesto"]) ? $_POST["nombrePuesto"] : "");
 
-	//SENTECIA SQL
-	$sentencia = $conexion->prepare("UPDATE tbl_puestos SET nombre_puesto=:nombrePuesto WHERE id_puestos=:id");
+    //SENTECIA SQL
+    $sentencia = $conexion->prepare("UPDATE tbl_puestos SET nombre_puesto=:nombrePuesto WHERE id_puestos=:id");
 
-	//asignando los valores del metodo post, del formulario
-	$sentencia->bindParam(":nombrePuesto", $nombre_puesto);
-	$sentencia->bindParam(":id", $txtID);
-	$sentencia->execute();
-	header("Location: index.php");
+    //asignando los valores del metodo post, del formulario
+    $sentencia->bindParam(":nombrePuesto", $nombre_puesto);
+    $sentencia->bindParam(":id", $txtID);
+    $sentencia->execute();
+    header("Location: index.php");
 }
 
 ?>
 
-<?php include "../../templates/header.php";?>
+<?php include("../../template/header.php"); ?>
 
 
 </br>
@@ -51,15 +50,13 @@ if ($_POST) {
         <form action="" method="post" enctype="multipart/form-data">
 
             <div class="mb-3">
-              <label for="txtID" class="form-label">ID:</label>
-              <input type="text" value="<?php echo $txtID; ?>"
-                class="form-control" readonly name="txtID" id="txtID" aria-describedby="helpId" placeholder="ID">
+                <label for="txtID" class="form-label">ID:</label>
+                <input type="text" value="<?php echo $txtID; ?>" class="form-control" readonly name="txtID" id="txtID" aria-describedby="helpId" placeholder="ID">
             </div>
 
             <div class="mb-3">
-              <label for="nombrePuesto" class="form-label">Nombre del puesto:</label>
-              <input type="text" value="<?php echo $nombrePuesto; ?>"
-                class="form-control" name="nombrePuesto" id="nombrePuesto" aria-describedby="helpId" placeholder="Nombre del puesto">
+                <label for="nombrePuesto" class="form-label">Nombre del puesto:</label>
+                <input type="text" value="<?php echo $nombrePuesto; ?>" class="form-control" name="nombrePuesto" id="nombrePuesto" aria-describedby="helpId" placeholder="Nombre del puesto">
             </div>
 
             <button type="submit" class="btn btn-success">Actualizar</button>
@@ -74,4 +71,4 @@ if ($_POST) {
 
 
 
-<?php include "../../templates/footer.php";?>
+<?php include("../../template/footer.php"); ?>

@@ -1,7 +1,7 @@
 <?php
 
 //CONEXION
-include "../../bd.php";
+include ("../../conexion.php");
 
 if (isset($_GET['txtID'])) {
 	$txtID = (isset($_GET['txtID']) ? $_GET['txtID'] : "");
@@ -44,7 +44,7 @@ if ($_POST) {
 
 ?>
 
-<?php include "../../templates/header.php";?>
+<?php include ("../../template/header.php");?>
 
 
 </br>
@@ -87,4 +87,4 @@ if ($_POST) {
 
 
 
-<?php include "../../templates/footer.php";?>
+<?php include ("../../template/footer.php");?>
